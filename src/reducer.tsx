@@ -162,7 +162,7 @@ export const reducer = (state: StateType, action: ActionType) => {
             return {
                 ...state,
                 activePersonId: action.value.activePersonId,
-                activeConversationId: action.value.activePersonId,
+                activeConversationId: action.value.activeConversationId,
             };
         }
 
