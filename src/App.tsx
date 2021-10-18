@@ -110,9 +110,11 @@ export const App = () => {
                         </div>
                         <div className="message-body has-background-white p-0">
                             <Conversations
+                                people={state.people}
                                 conversations={state.conversations}
                                 loggedUserId={state.loggedUserId}
                                 activeConversationId={state.activeConversationId}
+                                dispatch={dispatch}
                             />
                         </div>
                     </article>
@@ -139,7 +141,7 @@ export const App = () => {
                                         return <Message
                                             key={mess.id}
                                             me={state.loggedUserId === mess.from}
-                                            initials={isSameUser ? '' : (state.loggedUserId === mess.from ? loggedUser.initials : "XZ")}>
+                                            initials={isSameUser ? '' : (state.loggedUserId === mess.from ? loggedUser.initials : activePerson.initials)}>
                                                 {mess.text.split("\n").map((row, i) => <p key={i}>{row}</p>)}
                                         </Message>
                                     })}

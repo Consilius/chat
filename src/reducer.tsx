@@ -76,7 +76,7 @@ export const initialState: StateType = {
             {
                 id: '7',
                 from: '2',
-                sent: '17.10.2021 13:55',
+                sent: '2021-10-18T22:49:17.000Z',
                 displayed: null,
                 text: 'Věta druhá. A souvětí s Enterem, <br/> ach ano, to je ono'
             },
@@ -148,8 +148,8 @@ export const reducer = (state: StateType, action: ActionType) => {
                 [tmpAttr]: action.value,
             }
         }
-        case 'setActivePerson': {
 
+        case 'setActivePerson': {
             return {
                 ...state,
                 showConversations: false,
@@ -157,6 +157,15 @@ export const reducer = (state: StateType, action: ActionType) => {
                 activeConversationId: getActiveConversationId(state.conversations, state.loggedUserId, action.value),
             };
         }
+
+        case 'setActiveConversation': {
+            return {
+                ...state,
+                activePersonId: action.value.activePersonId,
+                activeConversationId: action.value.activePersonId,
+            };
+        }
+
         default:
             throw new Error('Undefined dispatch type');
     }

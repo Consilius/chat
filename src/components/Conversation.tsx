@@ -8,13 +8,14 @@ type Props = {
     initials: string,
     name: string,
     surname: string,
-    firstLine: string,
+    lastLine: string,
     active: boolean,
     unread: boolean,
     time: string,
+    onClick: React.MouseEventHandler,
 }
 
-export const Conversation = (props: Props) => <div className={`card is-shadowless has-background-${props.active ? 'grey-lighter' : 'white'}`} style={{borderRadius: "0"}}>
+export const Conversation = (props: Props) => <div className={`card is-shadowless has-background-${props.active ? 'grey-lighter' : 'white'}`} style={{borderRadius: "0"}} onClick={props.onClick}>
     <div className="card-content py-2">
         <div className="media is-align-items-center">
             <div className="media-left has-text-white">
@@ -23,7 +24,7 @@ export const Conversation = (props: Props) => <div className={`card is-shadowles
             <Avatar initials={props.initials} />
             <div className="media-content">
                 <NameTime><span>{`${props.name} ${props.surname}`}</span><em>{props.time} <FontAwesomeIcon icon={faAngleRight} /></em></NameTime>
-                <p className="is-7" style={{color: "#999"}}>{props.firstLine}</p>
+                <p className="is-7" style={{color: "#999"}}>{props.lastLine}</p>
             </div>
         </div>
     </div>
