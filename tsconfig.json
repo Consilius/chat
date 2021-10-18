@@ -1,0 +1,26 @@
+{
+    "include": ["src/**/*.ts", "src/**/*.tsx"],
+    "exclude": ["node_modules"],
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "moduleResolution": "Node",
+        "sourceMap": true,
+        "baseUrl": "src",
+        "target": "es6",
+        "jsx": "react",
+        "module": "commonjs",
+        "lib": ["dom", "es2017"],
+
+        "allowJs": true,
+        "checkJs": false,
+
+        "strict": true,
+        "noUnusedLocals": true,
+
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+
+        "noEmit": true,
+        "isolatedModules": true
+    }
+}
