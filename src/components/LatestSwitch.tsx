@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import {WhichConversationType} from '../types';
 
-export const LatestSwitch = (props) => <LatestToggleEl>
+type Props = {
+    whichConversation: WhichConversationType
+    dispatch: Function,
+}
+
+export const LatestSwitch = (props: Props) => <LatestToggleEl>
     <span
         className={`${props.whichConversation === 'Latest' ? 'active' : ''}`}
         onClick={e => {e.preventDefault(); props.dispatch({type: 'set', attr: 'Conversation', value: 'Latest'})}}>Latest</span>

@@ -1,10 +1,32 @@
-export const initialState = {
-    showPeople: false,
+import {nanoid} from "nanoid";
+import {ConversationType, StateType, ActionType} from './types';
+
+const getActiveConversationId = (conversations: Array<ConversationType>, loggedUserId: string, activePersonId: string): string => {
+    const activeConversation = conversations.filter(row => row.users.find(id => id === loggedUserId)).filter(row => row.users.find(id => id === activePersonId))
+
+    if (activeConversation.length) {
+        return activeConversation[0].id
+    }
+
+    const newConversation = {
+        id: nanoid(),
+        users: [loggedUserId, activePersonId],
+        messages: []
+    }
+
+    conversations.push(newConversation);
+
+    return newConversation.id
+}
+
+export const initialState: StateType = {
+    showPeople: true,
     showFavorite: true,
     showConversations: true,
     whichConversation: 'Latest',
-    activeUser: '1',
-    activeConversation: '1',
+    loggedUserId: '1',
+    activePersonId: '2',
+    activeConversationId: '1',
     conversations: [{
         id: '1',
         users: ['1', '2'],
@@ -65,49 +87,60 @@ export const initialState = {
             id: '1',
             name: 'Dale',
             surname: 'Cooper',
-            isFavorite: ['2', '5'],
+            hasFavorites: ['2', '5'],
         },
         {
             id: '2',
             name: 'Harry',
             surname: 'Trueman',
-            isFavorite: ['1'],
+            hasFavorites: ['1'],
         },
         {
             id: '3',
             name: 'Pete',
             surname: 'Packard',
-            isFavorite: ['1'],
+            hasFavorites: ['1'],
         },
         {
             id: '4',
             name: 'Josie',
             surname: 'Packard',
-            isFavorite: [],
+            hasFavorites: [],
         },
         {
             id: '5',
             name: 'Týna',
             surname: 'Žánů',
-            isFavorite: [],
+            hasFavorites: [],
         },
     ]
 }
 
-const allowedAttrs = ['showPeople', 'showConversations', 'showFavorite', 'showLatest'];
-
-export const reducer = (state, action) => {
+export const reducer = (state: StateType, action: ActionType) => {
     switch (action.type) {
         case 'toggle': {
-            const tmpAttr = `show${action.attr}`
-            if (!allowedAttrs.find(row => row === tmpAttr)) {
-                throw new Error('Unsupported show attribute');
+            if (!(typeof action.attr === 'string')) {
+                throw new Error('attribute has to be string');
             }
+
+            const tmpAttr = `show${action.attr}`
             return {
                 ...state,
                 [tmpAttr]: !state[tmpAttr],
             }
         }
+
+        case 'toggleFavorite': {
+            const loggedUser = state.people.find(row => row.id === state.loggedUserId);
+            const favoriteIndex = loggedUser?.hasFavorites.findIndex(id => id === state.activePersonId);
+
+            if (favoriteIndex === -1) {
+                loggedUser?.hasFavorites.push(state.activePersonId);
+            } else {
+                loggedUser?.hasFavorites.splice(favoriteIndex, 1);
+            }
+        }
+
         case 'set': {
             const tmpAttr = `which${action.attr}`
             return {
@@ -115,8 +148,15 @@ export const reducer = (state, action) => {
                 [tmpAttr]: action.value,
             }
         }
-        case 'decrement':
-            return {count: state.count - 1};
+        case 'setActivePerson': {
+
+            return {
+                ...state,
+                showConversations: false,
+                activePersonId: action.value,
+                activeConversationId: getActiveConversationId(state.conversations, state.loggedUserId, action.value),
+            };
+        }
         default:
             throw new Error('Undefined dispatch type');
     }

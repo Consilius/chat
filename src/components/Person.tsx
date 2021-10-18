@@ -5,9 +5,10 @@ type Props = {
     initials: string,
     name: string,
     surname: string,
+    onClick: React.MouseEventHandler,
 }
 
-export const Person = (props: Props) => <div className="card is-shadowless has-background-light">
+export const Person = (props: Props) => <div className="card is-shadowless has-background-light" onClick={props.onClick}>
     <div className="card-content py-2">
         <div className="media is-align-items-center">
             <Avatar

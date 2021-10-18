@@ -5,7 +5,6 @@ import {faAngleRight} from '@fortawesome/free-solid-svg-icons'
 import {Avatar} from ".";
 
 type Props = {
-    id: string,
     initials: string,
     name: string,
     surname: string,
