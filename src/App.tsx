@@ -2,7 +2,7 @@ import React, {useReducer, useEffect, useState} from 'react';
 import message from './message.png';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faAngleRight, faAngleDown, faArrowAltCircleUp, faStar} from '@fortawesome/free-solid-svg-icons'
-import {Messages, Avatar, LatestSwitch, Favorites, People, Conversations} from './components';
+import {Settings, Messages, Avatar, LatestSwitch, Favorites, People, Conversations} from './components';
 import {initialState, reducer} from './reducer';
 import {getInitials} from './utils';
 
@@ -62,7 +62,7 @@ export const App = () => {
         <div className="hero-body p-0">
             <div className="columns is-gapless">
                 <div className="column is-one-quarter has-background-light">
-                    <div className="card is-shadowless has-background-light mb-5">
+                    <div className="card is-shadowless has-background-light mb-5" onClick={e =>{e.preventDefault(); dispatch({type: 'displaySettings'})}} style={{cursor: 'pointer'}}>
                         <div className="card-content py-2">
                             <div className="media is-align-items-center">
                                 <div className="media-content has-text-right">
@@ -72,7 +72,7 @@ export const App = () => {
                             </div>
                         </div>
                     </div>
-                    <div className={`card is-shadowless `} style={{cursor: 'pointer', borderRadius: "0", backgroundColor: `${state.showConversations ? '#a4a4a4' : 'transparent'}`}} onClick={e => {e.preventDefault(); dispatch({type: 'toggle', attr: 'Conversations'})}}>
+                    <div className={`card is-shadowless `} style={{cursor: 'pointer', borderRadius: "0", backgroundColor: `${state.displayConversations ? '#a4a4a4' : 'transparent'}`}} onClick={e => {e.preventDefault(); dispatch({type: 'displayConversations'})}}>
                         <div className="card-content">
                             <div className="media is-align-items-center">
                                 <div className="media-left">
@@ -107,7 +107,7 @@ export const App = () => {
                         dispatch={dispatch}
                     />}
                 </div>
-                {state.showConversations && <div className="column has-background-white is-one-third" style={{borderRight: "1px solid black"}}>
+                {state.displayConversations && <div className="column has-background-white is-one-third" style={{borderRight: "1px solid black"}}>
                     <article className="message">
                         <div className="message-header is-justify-content-center has-background-white" style={{borderBottom: "1px solid black"}}>
                             <LatestSwitch
@@ -127,7 +127,7 @@ export const App = () => {
                         </div>
                     </article>
                 </div>}
-                <div className="column has-background-white">
+                {state.displaySettings ? <Settings /> : <div className="column has-background-white">
                     <section className="hero is-fullheight">
                         <div className="hero-head">
                             <article className="message">
@@ -170,7 +170,7 @@ export const App = () => {
                             </article>
                         </div>
                     </section>
-                </div>
+                </div>}
             </div>
         </div>
     </section>

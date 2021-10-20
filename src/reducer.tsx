@@ -6,8 +6,8 @@ import {getActiveConversation} from './utils';
 export const initialState: StateType = {
     showPeople: true,
     showFavorite: true,
-    showConversations: true,
-    showSettings: true,
+    displayConversations: true,
+    displaySettings: false,
     whichConversation: 'Latest',
     loggedUserId: '1',
     activePersonId: '2',
@@ -144,7 +144,8 @@ export const reducer = (state: StateType, action: ActionType) => {
         case 'setActivePerson': {
             return {
                 ...state,
-                showConversations: false,
+                displaySettings: false,
+                displayConversations: false,
                 activePersonId: action.value,
                 activeConversationId: getActiveConversation(state.conversations, state.loggedUserId, action.value).id,
             };
@@ -176,6 +177,20 @@ export const reducer = (state: StateType, action: ActionType) => {
                 ...state
             }
         }
+
+        case 'displaySettings':
+            return {
+                ...state,
+                displaySettings: true,
+                displayConversations: false,
+            }
+
+        case 'displayConversations':
+            return {
+                ...state,
+                displaySettings: false,
+                displayConversations: true,
+            }
 
         default:
             throw new Error('Undefined dispatch type');
