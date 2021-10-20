@@ -14,6 +14,9 @@ export const App = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [text, setText] = useState('');
     const [loggedUser, setLoggedUser] = useState({
+        id: '',
+        name: '',
+        surname: '',
         dispName: '',
         initials: '',
         hasFavorites: [''],
@@ -31,6 +34,7 @@ export const App = () => {
 
         if (tmpLU) {
             setLoggedUser({
+                ...tmpLU,
                 dispName: `${tmpLU.name} ${tmpLU .surname}`,
                 initials: getInitials(tmpLU.name, tmpLU.surname),
                 hasFavorites: tmpLU.hasFavorites,
@@ -105,8 +109,8 @@ export const App = () => {
                     <article className="message">
                         <div className="message-header is-justify-content-center has-background-white" style={{borderBottom: "1px solid black"}}>
                             <LatestSwitch
-                                dispatch={dispatch}
                                 whichConversation={state.whichConversation}
+                                dispatch={dispatch}
                             />
                         </div>
                         <div className="message-body has-background-white p-0">
@@ -115,6 +119,7 @@ export const App = () => {
                                 conversations={state.conversations}
                                 loggedUserId={state.loggedUserId}
                                 activeConversationId={state.activeConversationId}
+                                whichConversation={state.whichConversation}
                                 dispatch={dispatch}
                             />
                         </div>
@@ -128,7 +133,7 @@ export const App = () => {
                                     <p style={{width: "100%", textAlign: "center"}}>Conversation with {activePerson.name}</p>
                                     <FontAwesomeIcon
                                         icon={faStar}
-                                        style={{color: `${loggedUser.hasFavorites.find(id => id === activePerson.id) ? 'black' :'silver'}`}}
+                                        style={{color: `${loggedUser.hasFavorites.find(id => id === activePerson.id) ? 'black' :'silver'}`, cursor: 'pointer'}}
                                         onClick={e => {e.preventDefault(); dispatch({type: 'toggleFavorite'})}}
                                     />
                                 </div>

@@ -9,10 +9,12 @@ const getActiveConversationId = (conversations: Array<ConversationType>, loggedU
         return activeConversation[0].id
     }
 
-    const newConversation = {
+    const newConversation:ConversationType = {
         id: nanoid(),
         users: [loggedUserId, activePersonId],
-        messages: []
+        messages: [],
+        lastMessage: '',
+        lastMessageDate: DateTime.now(),
     }
 
     conversations.push(newConversation);
@@ -77,7 +79,7 @@ export const initialState: StateType = {
             {
                 id: '7',
                 from: '2',
-                sent: '2021-10-18T22:49:17.000Z',
+                sent: '2021-10-19T13:00:17.000Z',
                 displayed: null,
                 text: 'Věta druhá. A souvětí s Enterem, <br/> ach ano, to je ono'
             },
@@ -133,12 +135,19 @@ export const reducer = (state: StateType, action: ActionType) => {
 
         case 'toggleFavorite': {
             const loggedUser = state.people.find(row => row.id === state.loggedUserId);
-            const favoriteIndex = loggedUser?.hasFavorites.findIndex(id => id === state.activePersonId);
+            if (!loggedUser) {
+                throw Error("No user is logged in")
+            }
+            const favoriteIndex = loggedUser.hasFavorites.findIndex(id => id === state.activePersonId);
 
             if (favoriteIndex === -1) {
                 loggedUser?.hasFavorites.push(state.activePersonId);
             } else {
                 loggedUser?.hasFavorites.splice(favoriteIndex, 1);
+            }
+
+            return {
+                ...state
             }
         }
 
@@ -179,7 +188,7 @@ export const reducer = (state: StateType, action: ActionType) => {
                 displayed: null,
                 sent: DateTime.now().toISO(),
                 text: action.value
-            })
+            });
 
             return {
                 ...state

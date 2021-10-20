@@ -1,3 +1,5 @@
+import {DateTime} from "luxon"; '@types/luxon';
+
 export type MessageType = {
     id: string,
     from: string,
@@ -16,6 +18,8 @@ export type ConversationType = {
     id: string,
     users: Array<string>,
     messages: Array<MessageType>,
+    lastMessage?: string,
+    lastMessageDate?: DateTime,
 }
 
 export type WhichConversationType = 'Latest'|'All';

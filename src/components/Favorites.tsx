@@ -5,7 +5,7 @@ import {Favorite} from '.';
 
 type Props = {
     people: Array<PersonType>,
-    loggedUser: any,
+    loggedUser: PersonType,
     dispatch: Function,
 }
 

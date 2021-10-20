@@ -15,7 +15,7 @@ type Props = {
     onClick: React.MouseEventHandler,
 }
 
-export const Conversation = (props: Props) => <div className={`card is-shadowless has-background-${props.active ? 'grey-lighter' : 'white'}`} style={{borderRadius: "0"}} onClick={props.onClick}>
+export const Conversation = (props: Props) => <div className={`card is-shadowless has-background-${props.active ? 'grey-lighter' : 'white'}`} style={{borderRadius: "0", cursor: 'pointer'}} onClick={props.onClick}>
     <div className="card-content py-2">
         <div className="media is-align-items-center">
             <div className="media-left has-text-white">
