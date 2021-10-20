@@ -2,7 +2,7 @@ import React, {useReducer, useEffect, useState} from 'react';
 import message from './message.png';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faAngleRight, faAngleDown, faArrowAltCircleUp, faStar} from '@fortawesome/free-solid-svg-icons'
-import {Message, Avatar, LatestSwitch, Favorites, People, Conversations} from './components';
+import {Messages, Avatar, LatestSwitch, Favorites, People, Conversations} from './components';
 import {initialState, reducer} from './reducer';
 import {getInitials} from './utils';
 
@@ -24,6 +24,7 @@ export const App = () => {
     const [activePerson, setActivePerson] = useState({
         id: '',
         name: '',
+        surname: '',
         dispName: '',
         initials: '',
         hasFavorites: [''],
@@ -90,6 +91,7 @@ export const App = () => {
                         <FontAwesomeIcon style={{cursor: 'pointer'}} icon={state.showFavorite ? faAngleDown : faAngleRight} onClick={e => {e.preventDefault(); dispatch({type: 'toggle', attr: 'Favorite'})}} /></h2>
                     </div>
                     {state.showFavorite && <Favorites
+                        conversations={state.conversations}
                         people={state.people}
                         loggedUser={loggedUser}
                         dispatch={dispatch}
@@ -142,15 +144,13 @@ export const App = () => {
                         <div className="hero-foot">
                             <article className="message">
                                 <div className="message-body has-background-white" style={{border: "none"}}>
-                                    {state.conversations.find(row => row.id === state.activeConversationId).messages.map((mess, ind, array) => {
-                                        const isSameUser = ind ? (array[ind-1].from === mess.from) : false;
-                                        return <Message
-                                            key={mess.id}
-                                            me={state.loggedUserId === mess.from}
-                                            initials={isSameUser ? '' : (state.loggedUserId === mess.from ? loggedUser.initials : activePerson.initials)}>
-                                                {mess.text.split("\n").map((row, i) => <p key={i}>{row}</p>)}
-                                        </Message>
-                                    })}
+                                    <Messages
+                                        conversations={state.conversations}
+                                        activePerson={activePerson}
+                                        loggedUser={loggedUser}
+                                        activeConversationId={state.activeConversationId}
+                                        loggedUserId={state.loggedUserId}
+                                    />
                                     <div className="field mt-4">
                                         <form className="control has-icons-left has-icons-right" onSubmit={e => {e.preventDefault(); dispatch({type: 'addMessage', value: text}); setText("") }}>
                                             <input

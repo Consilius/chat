@@ -1,31 +1,13 @@
 import {nanoid} from "nanoid";
-import {ConversationType, StateType, ActionType} from './types';
+import {StateType, ActionType} from './types';
 import {DateTime} from 'luxon';
-
-const getActiveConversationId = (conversations: Array<ConversationType>, loggedUserId: string, activePersonId: string): string => {
-    const activeConversation = conversations.filter(row => row.users.find(id => id === loggedUserId)).filter(row => row.users.find(id => id === activePersonId))
-
-    if (activeConversation.length) {
-        return activeConversation[0].id
-    }
-
-    const newConversation:ConversationType = {
-        id: nanoid(),
-        users: [loggedUserId, activePersonId],
-        messages: [],
-        lastMessage: '',
-        lastMessageDate: DateTime.now(),
-    }
-
-    conversations.push(newConversation);
-
-    return newConversation.id
-}
+import {getActiveConversation} from './utils';
 
 export const initialState: StateType = {
     showPeople: true,
     showFavorite: true,
     showConversations: true,
+    showSettings: true,
     whichConversation: 'Latest',
     loggedUserId: '1',
     activePersonId: '2',
@@ -164,7 +146,7 @@ export const reducer = (state: StateType, action: ActionType) => {
                 ...state,
                 showConversations: false,
                 activePersonId: action.value,
-                activeConversationId: getActiveConversationId(state.conversations, state.loggedUserId, action.value),
+                activeConversationId: getActiveConversation(state.conversations, state.loggedUserId, action.value).id,
             };
         }
 

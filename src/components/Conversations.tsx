@@ -1,7 +1,7 @@
 import React from 'react';
 import {Conversation} from '.';
 import {ConversationType, PersonType, WhichConversationType} from '../types';
-import {getInitials, sortDates} from '../utils';
+import {getInitials, sortDates, getLastMessage} from '../utils';
 import {DateTime} from 'luxon';
 
 type Props = {
@@ -19,7 +19,7 @@ export const Conversations = (props: Props) => {
     const conversations = props.conversations
         .filter(row => row.users.find(usr => usr === props.loggedUserId))
         .map(row => {
-            const lastMessage = row.messages.length ? row.messages[row.messages.length - 1].text : '';
+            const lastMessage = getLastMessage(row.messages);
             const lastMessageDate = row.messages.length ? DateTime.fromISO(row.messages[row.messages.length - 1].sent) : (row.lastMessageDate ? row.lastMessageDate : now);
 
             return {

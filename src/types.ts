@@ -12,6 +12,7 @@ export type PersonType = {
     name: string,
     surname: string,
     hasFavorites: Array<string>,
+    initials?: string,
 }
 
 export type ConversationType = {
@@ -28,6 +29,7 @@ export type StateType = {
     showPeople: boolean,
     showFavorite: boolean,
     showConversations: boolean,
+    showSettings: boolean,
     whichConversation: WhichConversationType,
     loggedUserId: string,
     activePersonId: string,
