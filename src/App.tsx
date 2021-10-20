@@ -12,6 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 export const App = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [text, setText] = useState('');
     const [loggedUser, setLoggedUser] = useState({
         dispName: '',
         initials: '',
@@ -146,15 +147,19 @@ export const App = () => {
                                         </Message>
                                     })}
                                     <div className="field mt-4">
-                                        <p className="control has-icons-left has-icons-right">
-                                            <input className="input" type="email" placeholder="Message Peter" style={{borderRadius: "25px"}} />
-                                            <span className="icon is-small is-left">
-                                            <i className="fas fa-envelope"></i>
+                                        <form className="control has-icons-left has-icons-right" onSubmit={e => {e.preventDefault(); dispatch({type: 'addMessage', value: text}); setText("") }}>
+                                            <input
+                                                className="input"
+                                                type="text"
+                                                value={text}
+                                                placeholder={`Message ${activePerson.name}`}
+                                                style={{borderRadius: "25px"}}
+                                                onChange={e => {setText(e.target.value)}}
+                                            />
+                                            <span className="icon is-small is-right" style={{pointerEvents: "auto"}} >
+                                                <FontAwesomeIcon icon={faArrowAltCircleUp} onClick={e => {e.preventDefault(); dispatch({type: 'addMessage', value: text}); setText("") }} />
                                             </span>
-                                            <span className="icon is-small is-right">
-                                                <FontAwesomeIcon icon={faArrowAltCircleUp} />
-                                            </span>
-                                        </p>
+                                        </form>
                                     </div>
                                 </div>
                             </article>

@@ -1,5 +1,6 @@
 import {nanoid} from "nanoid";
 import {ConversationType, StateType, ActionType} from './types';
+import {DateTime} from 'luxon';
 
 const getActiveConversationId = (conversations: Array<ConversationType>, loggedUserId: string, activePersonId: string): string => {
     const activeConversation = conversations.filter(row => row.users.find(id => id === loggedUserId)).filter(row => row.users.find(id => id === activePersonId))
@@ -164,6 +165,25 @@ export const reducer = (state: StateType, action: ActionType) => {
                 activePersonId: action.value.activePersonId,
                 activeConversationId: action.value.activeConversationId,
             };
+        }
+
+        case 'addMessage': {
+            if (!action.value.trim()) {
+                return state;
+            }
+
+            const conversation = state.conversations.find(row => row.id === state.activeConversationId);
+            conversation?.messages.push({
+                id: nanoid(),
+                from: state.loggedUserId,
+                displayed: null,
+                sent: DateTime.now().toISO(),
+                text: action.value
+            })
+
+            return {
+                ...state
+            }
         }
 
         default:
