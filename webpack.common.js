@@ -5,19 +5,24 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     entry: {
-        //    polyfills: './src/polyfills.js',
         index: './src/index.tsx',
     },
     optimization: {
         runtimeChunk: false,
         splitChunks: {
+            chunks: 'all',
             cacheGroups: {
-                default: false,
                 commons: {
                     test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
-                    chunks: 'all',
-                    minChunks: 2
+                    // cacheGroupKey here is `commons` as the key of the cacheGroup
+                    name(module, chunks, cacheGroupKey) {
+                      const moduleFileName = module
+                        .identifier()
+                        .split('/')
+                        .reduceRight((item) => item);
+                      const allChunksNames = chunks.map((item) => item.name).join('~');
+                      return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`;
+                    }
                 }
             }
         }
