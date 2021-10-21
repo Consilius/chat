@@ -1,7 +1,7 @@
 import {nanoid} from "nanoid";
 import {StateType, ActionType} from './types';
 import {DateTime} from 'luxon';
-import {getActiveConversation} from './utils';
+import {getActiveConversation, markAsRead} from './utils';
 
 export const initialState: StateType = {
     showPeople: true,
@@ -144,16 +144,30 @@ export const reducer = (state: StateType, action: ActionType) => {
         }
 
         case 'setActivePerson': {
+            const conversation = getActiveConversation(state.conversations, state.loggedUserId, action.value);
+            const now = DateTime.now().toISO();
+
+            markAsRead(conversation.messages, action.value, now)
+
             return {
                 ...state,
                 displayPreferences: false,
                 displayConversations: false,
                 activePersonId: action.value,
-                activeConversationId: getActiveConversation(state.conversations, state.loggedUserId, action.value).id,
+                activeConversationId: conversation.id,
             };
         }
 
         case 'setActiveConversation': {
+
+            const conversation = state.conversations.find(row => row.id === action.value.activeConversationId)
+
+            if (conversation) {
+                const now = DateTime.now().toISO();
+
+                markAsRead(conversation.messages, action.value.activeConversationId, now)
+            }
+
             return {
                 ...state,
                 activePersonId: action.value.activePersonId,

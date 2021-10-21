@@ -48,3 +48,9 @@ export const emptyPerson: PersonType = {
     initials: '',
     hasFavorites: [''],
 }
+
+export const markAsRead = (messages: Array<MessageType>, activePersonId: string, now: string) => {
+    for (const message of messages.filter(row => row.from === activePersonId).filter(row => !row.displayed)) {
+        message.displayed = now
+    }
+}
