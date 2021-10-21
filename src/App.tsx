@@ -174,8 +174,13 @@ export const App = () => {
             </div>
         </div>
         {state.showModal && <ModalForm
-            loggedUser={state.loggedUser}
+            loggedUser={loggedUser}
             close={e => {e.preventDefault(); dispatch({type: 'toggle', attr: 'Modal'})}}
+            save={(id: string, displayName: string, fullName: string) => (e: Event) => {e.preventDefault(); dispatch({type: 'saveNames', value: {
+                id,
+                displayName,
+                fullName
+            }}); setLoggedUser(o => {return {...o, displayName, fullName, initials: getInitials(fullName)}}); dispatch({type: 'toggle', attr: 'Modal'})}}
         />}
     </section>
 }

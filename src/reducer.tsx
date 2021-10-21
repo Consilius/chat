@@ -193,6 +193,22 @@ export const reducer = (state: StateType, action: ActionType) => {
                 displayConversations: true,
             }
 
+        case 'saveNames': {
+            const loggedUser = state.people.find(row => row.id === state.loggedUserId);
+
+            if (!loggedUser) {
+                throw Error("No user is logged in")
+            }
+
+            loggedUser.displayName = action.value.displayName;
+            loggedUser.fullName = action.value.fullName;
+
+            return {
+                ...state,
+            }
+
+        }
+
         default:
             throw new Error('Undefined dispatch type');
     }
