@@ -2,7 +2,10 @@ import {nanoid} from "nanoid";
 import {DateTime} from "luxon"; '@types/luxon';
 import {ConversationType, MessageType} from './types';
 
-export const getInitials = (name: string, surname: string): string => `${name[0]}${surname[0]}`.toUpperCase();
+export const getInitials = (fullName: string): string => {
+    const nameParts = fullName.split(' ', 2);
+    return `${nameParts[0][0]}${nameParts[1][0]}`.toUpperCase();
+}
 
 export const sortDates = (dateA: DateTime, dateB: DateTime) => {
     if (dateA < dateB) {

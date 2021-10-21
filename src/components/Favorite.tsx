@@ -3,8 +3,7 @@ import {Avatar} from ".";
 
 type Props = {
     initials: string,
-    name: string,
-    surname: string,
+    fullName: string,
     lastLine: string,
     onClick: React.MouseEventHandler,
 }
@@ -14,7 +13,7 @@ export const Favorite = (props: Props) => <div className="card is-shadowless has
         <div className="media is-align-items-center">
             <Avatar initials={props.initials} />
             <div className="media-content">
-                <p className="title is-6 mb-0">{`${props.name} ${props.surname}`}</p>
+                <p className="title is-6 mb-0">{props.fullName}</p>
                 <p className="is-7">{props.lastLine}</p>
             </div>
         </div>

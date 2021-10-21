@@ -22,9 +22,8 @@ export const Favorites = (props: Props) => {
 
         return <Favorite
             key={row.id}
-            initials={getInitials(row.name, row.surname)}
-            name={row.name}
-            surname={row.surname}
+            initials={getInitials(row.fullName)}
+            fullName={row.fullName}
             lastLine={getLastMessage(conversation.messages)}
             onClick={e => {e.preventDefault(); props.dispatch({type: 'setActivePerson', value: row.id})}}
         />

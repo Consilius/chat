@@ -9,11 +9,10 @@ export type MessageType = {
 }
 export type PersonType = {
     id: string,
-    name: string,
-    surname: string,
+    displayName: string,
+    fullName: string,
     hasFavorites: Array<string>,
     initials?: string,
-    dispName?: string,
 }
 
 export type ConversationType = {

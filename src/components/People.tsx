@@ -18,9 +18,8 @@ export const People = (props: Props) => {
 
     return <>{filteredPeople.map(row => <Person
         key={row.id}
-        initials={getInitials(row.name, row.surname)}
-        name={row.name}
-        surname={row.surname}
+        initials={getInitials(row.fullName)}
+        fullName={row.fullName}
         onClick={e => {e.preventDefault(); props.dispatch({type: 'setActivePerson', value: row.id})}}
     />)}</>
 }

@@ -71,32 +71,32 @@ export const initialState: StateType = {
     people: [
         {
             id: '1',
-            name: 'Dale',
-            surname: 'Cooper',
+            displayName: 'Dale',
+            fullName: 'Dale Cooper',
             hasFavorites: ['2', '5'],
         },
         {
             id: '2',
-            name: 'Harry',
-            surname: 'Trueman',
+            displayName: 'Harry',
+            fullName: 'Harry Trueman',
             hasFavorites: ['1'],
         },
         {
             id: '3',
-            name: 'Pete',
-            surname: 'Packard',
+            displayName: 'Pete',
+            fullName: 'Pete Packard',
             hasFavorites: ['1'],
         },
         {
             id: '4',
-            name: 'Josie',
-            surname: 'Packard',
+            displayName: 'Josie',
+            fullName: 'Josie Packard',
             hasFavorites: [],
         },
         {
             id: '5',
-            name: 'Týna',
-            surname: 'Žánů',
+            displayName: 'Týna',
+            fullName: 'Týna Žánů',
             hasFavorites: [],
         },
     ]

@@ -21,18 +21,18 @@ export const Preferences = (props: Props) => <div className="column has-backgrou
         <article className="message">
             <div className="message-body has-background-white" style={{border: "none"}}>
                 <div>
-                    <em>Name</em> <span>{props.loggedUser.name} <em>({props.loggedUser.dispName})</em></span>
+                    <em>Name</em> <span>{props.loggedUser.displayName} <em>({props.loggedUser.fullName})</em></span>
                     <button className="button" onClick={e => {e.preventDefault(); props.dispatch({type: 'toggle', attr: 'Modal'})}}>Edit</button>
                 </div>
             </div>
             <div className="message-body has-background-white" style={{border: "none"}}>
-                <div><em>Name</em> <span>{props.loggedUser.name} <em>{props.loggedUser.dispName}</em></span></div>
+                <div><em>Name</em> <span>{props.loggedUser.displayName} <em>{props.loggedUser.fullName}</em></span></div>
             </div>
             <div className="message-body has-background-white" style={{border: "none"}}>
-                <div><em>Name</em> <span>{props.loggedUser.name} <em>{props.loggedUser.dispName}</em></span></div>
+                <div><em>Name</em> <span>{props.loggedUser.displayName} <em>{props.loggedUser.fullName}</em></span></div>
             </div>
             <div className="message-body has-background-white" style={{border: "none"}}>
-                <div><em>Name</em> <span>{props.loggedUser.name} <em>{props.loggedUser.dispName}</em></span></div>
+                <div><em>Name</em> <span>{props.loggedUser.displayName} <em>{props.loggedUser.fullName}</em></span></div>
             </div>
         </article>
     </Body>

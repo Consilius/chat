@@ -3,8 +3,7 @@ import {Avatar} from ".";
 
 type Props = {
     initials: string,
-    name: string,
-    surname: string,
+    fullName: string,
     onClick: React.MouseEventHandler,
 }
 
@@ -16,7 +15,7 @@ export const Person = (props: Props) => <div className="card is-shadowless has-b
                 size={24}
             />
             <div className="media-content">
-                <p className="title is-6 mb-0">{`${props.name} ${props.surname}`}</p>
+                <p className="title is-6 mb-0">{props.fullName}</p>
             </div>
         </div>
     </div>

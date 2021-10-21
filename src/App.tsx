@@ -15,17 +15,15 @@ export const App = () => {
     const [text, setText] = useState('');
     const [loggedUser, setLoggedUser] = useState({
         id: '',
-        name: '',
-        surname: '',
-        dispName: '',
+        displayName: '',
+        fullName: '',
         initials: '',
         hasFavorites: [''],
     })
     const [activePerson, setActivePerson] = useState({
         id: '',
-        name: '',
-        surname: '',
-        dispName: '',
+        displayName: '',
+        fullName: '',
         initials: '',
         hasFavorites: [''],
     })
@@ -36,8 +34,7 @@ export const App = () => {
         if (tmpLU) {
             setLoggedUser({
                 ...tmpLU,
-                dispName: `${tmpLU.name} ${tmpLU .surname}`,
-                initials: getInitials(tmpLU.name, tmpLU.surname),
+                initials: getInitials(tmpLU.fullName),
                 hasFavorites: tmpLU.hasFavorites,
             })
         }
@@ -50,8 +47,7 @@ export const App = () => {
         if (tmpAP) {
             setActivePerson({
                 ...tmpAP,
-                dispName: `${tmpAP.name} ${tmpAP.surname}`,
-                initials: getInitials(tmpAP.name, tmpAP.surname),
+                initials: getInitials(tmpAP.fullName),
             })
         } else {
             new Error('Active person not foun')
@@ -66,7 +62,7 @@ export const App = () => {
                         <div className="card-content py-2">
                             <div className="media is-align-items-center">
                                 <div className="media-content has-text-right">
-                                    <p className="title is-6 mb-0 mr-2">{loggedUser.dispName}</p>
+                                    <p className="title is-6 mb-0 mr-2">{loggedUser.fullName}</p>
                                 </div>
                                 <Avatar initials={loggedUser.initials} size={24} />
                             </div>
@@ -136,7 +132,7 @@ export const App = () => {
                         <div className="hero-head">
                             <article className="message">
                                 <div className="message-header is-justify-content-end has-background-white has-text-black" style={{borderBottom: "1px solid black"}}>
-                                    <p style={{width: "100%", textAlign: "center"}}>Conversation with {activePerson.name}</p>
+                                    <p style={{width: "100%", textAlign: "center"}}>Conversation with {activePerson.displayName}</p>
                                     <FontAwesomeIcon
                                         icon={faStar}
                                         style={{color: `${loggedUser.hasFavorites.find(id => id === activePerson.id) ? 'black' :'silver'}`, cursor: 'pointer'}}
@@ -161,7 +157,7 @@ export const App = () => {
                                                 className="input"
                                                 type="text"
                                                 value={text}
-                                                placeholder={`Message ${activePerson.name}`}
+                                                placeholder={`Message ${activePerson.displayName}`}
                                                 style={{borderRadius: "25px"}}
                                                 onChange={e => {setText(e.target.value)}}
                                             />

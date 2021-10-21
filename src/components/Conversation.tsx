@@ -6,8 +6,7 @@ import {Avatar} from ".";
 
 type Props = {
     initials: string,
-    name: string,
-    surname: string,
+    fullName: string,
     lastLine: string,
     active: boolean,
     unread: boolean,
@@ -23,7 +22,7 @@ export const Conversation = (props: Props) => <div className={`card is-shadowles
             </div>
             <Avatar initials={props.initials} />
             <div className="media-content">
-                <NameTime><span>{`${props.name} ${props.surname}`}</span><em>{props.time} <FontAwesomeIcon icon={faAngleRight} /></em></NameTime>
+                <NameTime><span>{props.fullName}</span><em>{props.time} <FontAwesomeIcon icon={faAngleRight} /></em></NameTime>
                 <p className="is-7" style={{color: "#999"}}>{props.lastLine}</p>
             </div>
         </div>

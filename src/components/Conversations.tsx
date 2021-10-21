@@ -42,9 +42,8 @@ export const Conversations = (props: Props) => {
 
         return <Conversation
             key={conversation.id}
-            initials={getInitials(toPerson ? toPerson.name : '', toPerson ? toPerson.surname : '')}
-            name={toPerson ? toPerson.name : ''}
-            surname={toPerson ? toPerson.surname : ''}
+            initials={getInitials(toPerson ? toPerson.fullName : '')}
+            fullName={toPerson ? toPerson.fullName : ''}
             lastLine={conversation.lastMessage}
             active={props.activeConversationId === conversation.id}
             unread={!!isUnread}
