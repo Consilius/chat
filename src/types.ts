@@ -28,6 +28,7 @@ export type WhichConversationType = 'Latest'|'All';
 export type StateType = {
     showPeople: boolean,
     showFavorite: boolean,
+    showFavorites: boolean,
     showModal: boolean,
     displayConversations: boolean,
     displayPreferences: boolean,

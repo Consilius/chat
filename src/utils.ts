@@ -1,6 +1,6 @@
 import {nanoid} from "nanoid";
 import {DateTime} from "luxon"; '@types/luxon';
-import {ConversationType, MessageType} from './types';
+import {ConversationType, MessageType, PersonType} from './types';
 
 export const getInitials = (fullName: string): string => {
     const nameParts = fullName.split(' ', 2);
@@ -40,3 +40,11 @@ export const getActiveConversation = (conversations: Array<ConversationType>, lo
 }
 
 export const getLastMessage = (messages: Array<MessageType>): string => messages.length ? messages[messages.length - 1].text : '';
+
+export const emptyPerson: PersonType = {
+    id: '',
+    displayName: '',
+    fullName: '',
+    initials: '',
+    hasFavorites: [''],
+}

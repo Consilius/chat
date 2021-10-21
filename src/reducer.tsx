@@ -6,13 +6,14 @@ import {getActiveConversation} from './utils';
 export const initialState: StateType = {
     showPeople: true,
     showFavorite: true,
+    showFavorites: true,
     showModal: false,
     displayConversations: false,
     displayPreferences: true,
     whichConversation: 'Latest',
     loggedUserId: '1',
-    activePersonId: '2',
-    activeConversationId: '1',
+    activePersonId: '',
+    activeConversationId: '',
     conversations: [{
         id: '1',
         users: ['1', '2'],
@@ -208,6 +209,14 @@ export const reducer = (state: StateType, action: ActionType) => {
             }
 
         }
+
+        case 'setLoggedUserId':
+            return {
+                ...state,
+                loggedUserId: action.value,
+                activeConversationId: '',
+                activePersonId: '',
+            }
 
         default:
             throw new Error('Undefined dispatch type');

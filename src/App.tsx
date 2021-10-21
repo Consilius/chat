@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faAngleRight, faAngleDown, faArrowAltCircleUp, faStar} from '@fortawesome/free-solid-svg-icons'
 import {Preferences, Messages, Avatar, LatestSwitch, Favorites, People, Conversations, ModalForm} from './components';
 import {initialState, reducer} from './reducer';
-import {getInitials} from './utils';
+import {getInitials, emptyPerson} from './utils';
 
 if (process.env.NODE_ENV !== 'production') {
     console.log('Looks like we are in development mode!');
@@ -13,20 +13,8 @@ if (process.env.NODE_ENV !== 'production') {
 export const App = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [text, setText] = useState('');
-    const [loggedUser, setLoggedUser] = useState({
-        id: '',
-        displayName: '',
-        fullName: '',
-        initials: '',
-        hasFavorites: [''],
-    })
-    const [activePerson, setActivePerson] = useState({
-        id: '',
-        displayName: '',
-        fullName: '',
-        initials: '',
-        hasFavorites: [''],
-    })
+    const [loggedUser, setLoggedUser] = useState({...emptyPerson})
+    const [activePerson, setActivePerson] = useState({...emptyPerson})
 
     useEffect(() => {
         const tmpLU = state.people.find(row => row.id === state.loggedUserId)
@@ -50,7 +38,7 @@ export const App = () => {
                 initials: getInitials(tmpAP.fullName),
             })
         } else {
-            new Error('Active person not foun')
+            setActivePerson({...emptyPerson})
         }
     }, [state.activePersonId])
 
@@ -82,7 +70,7 @@ export const App = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="content mt-5 mb-0">
+                    {state.showFavorites && <><div className="content mt-5 mb-0">
                         <h2 className="title is-4 py-0 my-0 px-4 is-flex is-justify-content-space-between"><span>Favorites</span>
                         <FontAwesomeIcon style={{cursor: 'pointer'}} icon={state.showFavorite ? faAngleDown : faAngleRight} onClick={e => {e.preventDefault(); dispatch({type: 'toggle', attr: 'Favorite'})}} /></h2>
                     </div>
@@ -91,7 +79,7 @@ export const App = () => {
                         people={state.people}
                         loggedUser={loggedUser}
                         dispatch={dispatch}
-                    />}
+                    />}</>}
                     <div className="content mt-2 mb-0">
                         <h2 className="title is-4 py-0 my-0 px-4 is-flex is-justify-content-space-between"><span>People</span>
                         <FontAwesomeIcon style={{cursor: 'pointer'}} icon={state.showPeople ? faAngleDown : faAngleRight} onClick={e => {e.preventDefault(); dispatch({type: 'toggle', attr: 'People'})}} />
@@ -124,8 +112,10 @@ export const App = () => {
                     </article>
                 </div>}
                 {state.displayPreferences ? <Preferences
+                    people={state.people}
                     loggedUser={loggedUser}
                     showModal={state.showModal}
+                    showFavorites={state.showFavorites}
                     dispatch={dispatch}
                 /> : <div className="column has-background-white">
                     <section className="hero is-fullheight">
