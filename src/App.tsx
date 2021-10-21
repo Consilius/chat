@@ -122,18 +122,20 @@ export const App = () => {
                         <div className="hero-head">
                             <article className="message">
                                 <div className="message-header is-justify-content-end has-background-white has-text-black" style={{borderBottom: "1px solid black"}}>
-                                    <p style={{width: "100%", textAlign: "center"}}>Conversation with {activePerson.displayName}</p>
-                                    <FontAwesomeIcon
+                                    <p style={{width: "100%", textAlign: "center"}}>
+                                        {activePerson.id ? `Conversation with ${activePerson.displayName}` : 'Please select a person to chat with'}
+                                    </p>
+                                    {activePerson.id && <FontAwesomeIcon
                                         icon={faStar}
                                         style={{color: `${loggedUser.hasFavorites.find(id => id === activePerson.id) ? 'black' :'silver'}`, cursor: 'pointer'}}
                                         onClick={e => {e.preventDefault(); dispatch({type: 'toggleFavorite'})}}
-                                    />
+                                    />}
                                 </div>
                             </article>
                         </div>
                         <div className="hero-foot">
                             <article className="message">
-                                <div className="message-body has-background-white" style={{border: "none"}}>
+                            {activePerson.id && <div className="message-body has-background-white" style={{border: "none"}}>
                                     <Messages
                                         conversations={state.conversations}
                                         activePerson={activePerson}
@@ -142,13 +144,15 @@ export const App = () => {
                                         loggedUserId={state.loggedUserId}
                                     />
                                     <div className="field mt-4">
-                                        <form className="control has-icons-left has-icons-right" onSubmit={e => {e.preventDefault(); dispatch({type: 'addMessage', value: text}); setText("") }}>
-                                            <input
+                                        <form className="control has-icons-left has-icons-right">
+                                            <textarea
                                                 className="input"
-                                                type="text"
                                                 value={text}
                                                 placeholder={`Message ${activePerson.displayName}`}
-                                                style={{borderRadius: "25px"}}
+                                                style={{
+                                                    borderRadius: "25px",
+                                                    height: `${(text.split('\n').length * 1.5) + 1}em`
+                                                }}
                                                 onChange={e => {setText(e.target.value)}}
                                             />
                                             <span className="icon is-small is-right" style={{pointerEvents: "auto"}} >
@@ -156,7 +160,7 @@ export const App = () => {
                                             </span>
                                         </form>
                                     </div>
-                                </div>
+                                </div>}
                             </article>
                         </div>
                     </section>

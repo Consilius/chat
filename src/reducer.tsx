@@ -8,8 +8,8 @@ export const initialState: StateType = {
     showFavorite: true,
     showFavorites: true,
     showModal: false,
-    displayConversations: false,
-    displayPreferences: true,
+    displayConversations: true,
+    displayPreferences: false,
     whichConversation: 'Latest',
     loggedUserId: '1',
     activePersonId: '',
@@ -44,28 +44,28 @@ export const initialState: StateType = {
                 from: '1',
                 sent: '17.10.2021 13:55',
                 displayed: '17.10.2021 12:57',
-                text: 'Věta druhá. A souvětí s Enterem, <br/> ach ano, to je ono'
+                text: "Věta čtvrtá. A souvětí s Enterem, \n ach ano, to je ono"
             },
             {
                 id: '5',
                 from: '1',
                 sent: '17.10.2021 13:55',
                 displayed: '17.10.2021 12:57',
-                text: 'Věta druhá. A souvětí s Enterem, <br/> ach ano, to je ono'
+                text: "Věta pátá. A souvětí s Enterem, \n ach ano, to je ono"
             },
             {
                 id: '6',
                 from: '2',
                 sent: '17.10.2021 13:55',
                 displayed: null,
-                text: 'Věta druhá. A souvětí s Enterem, <br/> ach ano, to je ono'
+                text: 'Věta šestá. A souvětí s Enterem, \n ach ano, to je ono'
             },
             {
                 id: '7',
                 from: '2',
                 sent: '2021-10-19T13:00:17.000Z',
                 displayed: null,
-                text: 'Věta druhá. A souvětí s Enterem, <br/> ach ano, to je ono'
+                text: 'Věta sedmá. A souvětí s Enterem, \n ach ano, to je ono'
             },
         ]
     }],
@@ -159,13 +159,12 @@ export const reducer = (state: StateType, action: ActionType) => {
         }
 
         case 'setActiveConversation': {
-
             const conversation = state.conversations.find(row => row.id === action.value.activeConversationId)
 
             if (conversation) {
                 const now = DateTime.now().toISO();
 
-                markAsRead(conversation.messages, action.value.activeConversationId, now)
+                markAsRead(conversation.messages, action.value.activePersonId, now)
             }
 
             return {
