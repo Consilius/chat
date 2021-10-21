@@ -6,8 +6,9 @@ import {getActiveConversation} from './utils';
 export const initialState: StateType = {
     showPeople: true,
     showFavorite: true,
-    displayConversations: true,
-    displaySettings: false,
+    showModal: false,
+    displayConversations: false,
+    displayPreferences: true,
     whichConversation: 'Latest',
     loggedUserId: '1',
     activePersonId: '2',
@@ -144,7 +145,7 @@ export const reducer = (state: StateType, action: ActionType) => {
         case 'setActivePerson': {
             return {
                 ...state,
-                displaySettings: false,
+                displayPreferences: false,
                 displayConversations: false,
                 activePersonId: action.value,
                 activeConversationId: getActiveConversation(state.conversations, state.loggedUserId, action.value).id,
@@ -178,17 +179,17 @@ export const reducer = (state: StateType, action: ActionType) => {
             }
         }
 
-        case 'displaySettings':
+        case 'displayPreferences':
             return {
                 ...state,
-                displaySettings: true,
+                displayPreferences: true,
                 displayConversations: false,
             }
 
         case 'displayConversations':
             return {
                 ...state,
-                displaySettings: false,
+                displayPreferences: false,
                 displayConversations: true,
             }
 

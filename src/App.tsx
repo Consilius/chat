@@ -2,7 +2,7 @@ import React, {useReducer, useEffect, useState} from 'react';
 import message from './message.png';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faAngleRight, faAngleDown, faArrowAltCircleUp, faStar} from '@fortawesome/free-solid-svg-icons'
-import {Settings, Messages, Avatar, LatestSwitch, Favorites, People, Conversations} from './components';
+import {Preferences, Messages, Avatar, LatestSwitch, Favorites, People, Conversations, ModalForm} from './components';
 import {initialState, reducer} from './reducer';
 import {getInitials} from './utils';
 
@@ -62,7 +62,7 @@ export const App = () => {
         <div className="hero-body p-0">
             <div className="columns is-gapless">
                 <div className="column is-one-quarter has-background-light">
-                    <div className="card is-shadowless has-background-light mb-5" onClick={e =>{e.preventDefault(); dispatch({type: 'displaySettings'})}} style={{cursor: 'pointer'}}>
+                    <div className="card is-shadowless has-background-light mb-5" onClick={e =>{e.preventDefault(); dispatch({type: 'displayPreferences'})}} style={{cursor: 'pointer'}}>
                         <div className="card-content py-2">
                             <div className="media is-align-items-center">
                                 <div className="media-content has-text-right">
@@ -127,7 +127,11 @@ export const App = () => {
                         </div>
                     </article>
                 </div>}
-                {state.displaySettings ? <Settings /> : <div className="column has-background-white">
+                {state.displayPreferences ? <Preferences
+                    loggedUser={loggedUser}
+                    showModal={state.showModal}
+                    dispatch={dispatch}
+                /> : <div className="column has-background-white">
                     <section className="hero is-fullheight">
                         <div className="hero-head">
                             <article className="message">
@@ -173,5 +177,9 @@ export const App = () => {
                 </div>}
             </div>
         </div>
+        {state.showModal && <ModalForm
+            loggedUser={state.loggedUser}
+            close={e => {e.preventDefault(); dispatch({type: 'toggle', attr: 'Modal'})}}
+        />}
     </section>
 }

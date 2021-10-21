@@ -13,6 +13,7 @@ export type PersonType = {
     surname: string,
     hasFavorites: Array<string>,
     initials?: string,
+    dispName?: string,
 }
 
 export type ConversationType = {
@@ -28,8 +29,9 @@ export type WhichConversationType = 'Latest'|'All';
 export type StateType = {
     showPeople: boolean,
     showFavorite: boolean,
+    showModal: boolean,
     displayConversations: boolean,
-    displaySettings: boolean,
+    displayPreferences: boolean,
     whichConversation: WhichConversationType,
     loggedUserId: string,
     activePersonId: string,

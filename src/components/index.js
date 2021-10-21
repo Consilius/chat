@@ -8,4 +8,6 @@ export {Message} from './Message';
 export {Messages} from './Messages';
 export {Avatar} from './Avatar';
 export {LatestSwitch} from './LatestSwitch';
-export {Settings} from './Settings';
+export {Preferences} from './Preferences';
+export {ModalForm} from './ModalForm';
+export {Portal} from './Portal';
