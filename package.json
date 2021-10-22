@@ -4,10 +4,13 @@
   "private": true,
   "license": "MIT",
   "sideEffects": false,
+  "main": "main.js",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "dev": "webpack --watch --config webpack.dev.js",
-    "start": "webpack-dev-server --open --config webpack.dev.js"
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "preelectron": "yarn build",
+    "electron": "electron ."
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -39,6 +42,7 @@
     "babel-plugin-styled-components": "^1.13.2",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.4.0",
+    "electron": "^15.3.0",
     "html-webpack-plugin": "^5.3.2",
     "mini-css-extract-plugin": "^2.4.2",
     "node-sass": "^6.0.1",
