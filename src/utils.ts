@@ -3,8 +3,13 @@ import {DateTime} from "luxon"; '@types/luxon';
 import {ConversationType, MessageType, PersonType} from './types';
 
 export const getInitials = (fullName: string): string => {
-    const nameParts = fullName.split(' ', 2);
-    return `${nameParts[0][0]}${nameParts[1][0]}`.toUpperCase();
+    const cleanName = fullName?.trim();
+    console.log(cleanName)
+    if (!cleanName) {
+        return "";
+    }
+    const nameParts = cleanName.split(' ');
+    return `${nameParts[0][0]}${nameParts.length > 1 ? nameParts[nameParts.length - 1][0] : ''}`.toUpperCase();
 }
 
 export const sortDates = (dateA: DateTime, dateB: DateTime) => {
