@@ -4,7 +4,7 @@ import {ConversationType, MessageType, PersonType} from './types';
 
 export const getInitials = (fullName: string): string => {
     const cleanName = fullName?.trim();
-    console.log(cleanName)
+
     if (!cleanName) {
         return "";
     }
